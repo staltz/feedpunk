@@ -8,6 +8,9 @@
   },
   "author": "staltz.com",
   "license": "GPLv3",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "blessed": "0.1.81",
     "human-time": "0.0.1",
