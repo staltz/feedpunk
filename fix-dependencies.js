@@ -13,7 +13,9 @@ module.exports = function fixDependencies() {
 
 function removeConsoleLogs(filename) {
   const encoding = 'utf-8'
-  const previousSource = fs.readFileSync(filename, { encoding })
-  const nextSource = previousSource.replace(/console\.log.*\n/g, '')
-  fs.writeFileSync(filename, nextSource, { encoding })
+  try {
+    const previousSource = fs.readFileSync(filename, { encoding })
+    const nextSource = previousSource.replace(/console\.log.*\n/g, '')
+    fs.writeFileSync(filename, nextSource, { encoding })
+  } catch (err) {}
 }
