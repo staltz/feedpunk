@@ -1,0 +1,28 @@
+{
+  "name": "@staltz/feedpunk",
+  "version": "1.0.0",
+  "description": "A scuttlebutt client in the terminal",
+  "main": "index.js",
+  "bin": {
+    "feedpunk": "./bin.js"
+  },
+  "author": "staltz.com",
+  "license": "GPLv3",
+  "dependencies": {
+    "blessed": "0.1.81",
+    "human-time": "0.0.1",
+    "pull-stream": "^3.6.1",
+    "scuttlebot": "^10.5.0",
+    "ssb-about": "0.1.2",
+    "ssb-backlinks": "0.6.1",
+    "ssb-blobs": "1.1.4",
+    "ssb-client": "^4.5.2",
+    "ssb-config": "2.2.0",
+    "ssb-contacts": "0.0.2",
+    "ssb-friends": "2.4.0",
+    "ssb-keys": "7.0.13",
+    "ssb-private": "0.1.4",
+    "ssb-query": "1.0.2",
+    "ssb-serve-blobs": "1.0.0"
+  }
+}
