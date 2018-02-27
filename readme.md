@@ -33,4 +33,4 @@ Keyboard commands:
 
 # contributing
 
-just fork it. I don't have issues enabled on this repo because I'm just [gifting this repo, not committing to maintain it for you](https://staltz.com/open-source-without-maintainers.html). enjoy!
+just fork it. I don't have issues enabled on this repo because I'm just [gifting this repo, not committing to maintain it for you](https://staltz.com/open-source-without-maintainers.html). enjoy the gift!
