@@ -9,8 +9,10 @@ const screen = blessed.screen({
 screen.title = 'patchpunk'
 
 const connectionsBox = require('./connectionsBox')
-const feedBox = require('./feedBox')
+// const feedBox = require('./feedBox')
+const threadsBox = require('./threadsBox')
 const readMessage = require('./readMessage')
+const readThread = require('./readThread')
 
 screen.key(['escape', 'q', 'C-c'], (ch, key) => {
   if (screen.readingMessage) {
@@ -23,15 +25,23 @@ screen.key(['escape', 'q', 'C-c'], (ch, key) => {
 })
 
 screen.append(connectionsBox)
-screen.append(feedBox)
+// screen.append(feedBox)
+screen.append(threadsBox)
 screen.render()
-feedBox.focus()
+// feedBox.focus()
+threadsBox.focus()
 
 const ssb = startSSB()
 connectionsBox.setSSB(ssb)
-feedBox.setSSB(ssb)
+// feedBox.setSSB(ssb)
+threadsBox.setSSB(ssb)
+
+// screen.key(['space'], (ch, key) => {
+//   const line = feedBox.getItem(feedBox.getScroll())
+//   if (line.ssbMsgKey) readMessage(screen, ssb, line.ssbMsgKey)
+// })
 
 screen.key(['space'], (ch, key) => {
-  const line = feedBox.getItem(feedBox.getScroll())
-  if (line.ssbMsgKey) readMessage(screen, ssb, line.ssbMsgKey)
+  const line = threadsBox.getItem(threadsBox.getScroll())
+  if (line.ssbThread) readThread(screen, ssb, line.ssbThread)
 })

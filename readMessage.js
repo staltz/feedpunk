@@ -50,8 +50,8 @@ module.exports = function readMessage(screen, ssb, msgKey) {
   }
 
   ssb.get(msgKey, (err, msgValue) => {
-    if (msgValue.content.type === 'post') renderPostMsg(msgValue)
-    else renderMsg(msgValue)
+    //if (msgValue.content.type === 'Xpost') renderPostMsg(msgValue)
+    renderMsg(msgValue)
   })
 
   screen.append(readMessageBox)

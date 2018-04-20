@@ -26,6 +26,7 @@
     "ssb-keys": "7.0.16",
     "ssb-private": "0.2.3",
     "ssb-query": "2.1.0",
+    "ssb-threads": "1.0.0",
     "ssb-serve-blobs": "1.0.0"
   }
 }
