@@ -1,10 +1,8 @@
 const ssbKeys = require('ssb-keys')
 const ssbConfigInject = require('ssb-config/inject')
 const path = require('path')
-const fixDependencies = require('./fix-dependencies')
 
 module.exports = function startSSB() {
-  fixDependencies()
   const config = ssbConfigInject()
   config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
   config.logging.level = ''
