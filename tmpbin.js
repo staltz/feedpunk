@@ -12,7 +12,9 @@ pull(
   ssb.threads.public({
     reverse: true,
     live: false,
-    limit: 40
+    threadMaxSize: 3,
+    whitelist: ['post'],
+    limit: 40,
   }),
-  pull.drain(renderThreadInBox)
+  pull.drain(renderThreadInBox),
 )

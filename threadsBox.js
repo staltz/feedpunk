@@ -19,30 +19,30 @@ const threadsBox = blessed.list({
   scrollbar: {
     ch: ' ',
     track: {
-      bg: 'black'
+      bg: 'black',
     },
     style: {
-      inverse: true
-    }
+      inverse: true,
+    },
   },
   style: {
     item: {
       hover: {
-        bold: true
-      }
+        bold: true,
+      },
     },
     selected: {
       bg: '#004411',
       fg: '#00ff88',
-      bold: true
-    }
+      bold: true,
+    },
   },
   search: function(callback) {
     // prompt.input('Search:', '', function(err, value) {
     //   if (err) return
     //   return callback(null, value)
     // })
-  }
+  },
 })
 
 const addNameToMsg = ssb => (msg, cb) => {
@@ -98,9 +98,11 @@ threadsBox.showExistingFeed = function() {
     this.ssb.threads.public({
       reverse: true,
       live: false,
-      limit: this.height + 20
+      // threadMaxSize: 3,
+      allowlist: ['post'],
+      limit: this.height - 20,
     }),
-    pull.drain(renderThreadInBox)
+    pull.drain(renderThreadInBox),
   )
 }
 
@@ -109,10 +111,12 @@ threadsBox.pullOlder = function() {
     this.ssb.threads.public({
       reverse: true,
       live: false,
+      // threadMaxSize: 3,
+      allowlist: ['post'],
       lt: this.ssbLowest,
-      limit: 20
+      limit: 20,
     }),
-    pull.drain(renderThreadInBox)
+    pull.drain(renderThreadInBox),
   )
 }
 
@@ -123,13 +127,13 @@ threadsBox.alwaysUpdateLabelWithRecents = function() {
     this.ssb.threads.public({
       reverse: false,
       gt: Date.now(),
-      live: true
+      live: true,
     }),
     pull.drain(() => {
       this.ssbRecentCount += 1
       this.setLabel(label + '(' + this.ssbRecentCount + ' NEW) ')
       this.screen.render()
-    })
+    }),
   )
 }
 

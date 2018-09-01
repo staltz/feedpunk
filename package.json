@@ -15,7 +15,8 @@
     "blessed": "0.1.81",
     "human-time": "0.0.1",
     "pull-stream": "^3.6.8",
-    "scuttlebot": "^11.3.3",
+    "scuttlebot": "11.4.2",
+    "multiserver": "1.13.3",
     "ssb-about": "0.1.2",
     "ssb-backlinks": "0.7.3",
     "ssb-blobs": "1.1.5",
@@ -26,7 +27,7 @@
     "ssb-keys": "7.0.16",
     "ssb-private": "0.2.3",
     "ssb-query": "2.1.0",
-    "ssb-threads": "1.0.0",
+    "ssb-threads": "3.0.0",
     "ssb-serve-blobs": "1.0.0"
   }
 }

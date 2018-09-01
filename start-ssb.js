@@ -21,7 +21,6 @@ module.exports = function startSSB() {
     .use(require('ssb-query'))
     .use(require('ssb-threads'))
     .use(require('scuttlebot/plugins/invite'))
-    .use(require('scuttlebot/plugins/block'))
     .use(require('scuttlebot/plugins/local'))
     .call(null, config)
 }
