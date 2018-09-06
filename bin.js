@@ -4,7 +4,7 @@ const startSSB = require('./start-ssb')
 
 const screen = blessed.screen({
   smartCSR: true,
-  dockBorders: true
+  dockBorders: true,
 })
 screen.title = 'patchpunk'
 
@@ -32,6 +32,7 @@ connectionsBox.setSSB(ssb)
 feedBox.setSSB(ssb)
 
 screen.key(['space'], (ch, key) => {
+  if (screen.readingMessage) return
   const line = feedBox.getItem(feedBox.getScroll())
   if (line.ssbMsgKey) readMessage(screen, ssb, line.ssbMsgKey)
 })

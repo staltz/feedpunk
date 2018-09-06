@@ -6,7 +6,7 @@ module.exports = function readMessage(screen, ssb, msgKey) {
   var readMessageBox = blessed.box({
     top: 'center',
     left: 'center',
-    width: '50%',
+    width: '90%',
     height: '70%',
     label: ' {bold}{green-fg}Message{/green-fg}{/bold} ',
     tags: true,
