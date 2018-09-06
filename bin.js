@@ -12,7 +12,7 @@ const connectionsBox = require('./connectionsBox')
 const feedBox = require('./feedBox')
 const readMessage = require('./readMessage')
 
-screen.key(['escape', 'q', 'C-c'], (ch, key) => {
+screen.key(['escape', 'q'], (ch, key) => {
   if (screen.readingMessage) {
     screen.readingMessage.detach()
     screen.readingMessage = void 0
@@ -21,6 +21,10 @@ screen.key(['escape', 'q', 'C-c'], (ch, key) => {
   } else {
     process.exit(0)
   }
+})
+
+screen.key(['C-c'], (ch, key) => {
+  process.exit(0)
 })
 
 screen.append(connectionsBox)
