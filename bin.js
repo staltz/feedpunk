@@ -17,6 +17,7 @@ screen.key(['escape', 'q', 'C-c'], (ch, key) => {
     screen.readingMessage.detach()
     screen.readingMessage = void 0
     screen.render()
+    feedBox.focus()
   } else {
     process.exit(0)
   }

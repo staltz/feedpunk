@@ -11,8 +11,8 @@ module.exports = function readMessage(screen, ssb, msgKey) {
     label: ' {bold}{green-fg}Message{/green-fg}{/bold} ',
     tags: true,
     border: {
-      type: 'line'
-    }
+      type: 'line',
+    },
   })
 
   function setAuthorName(msgValue, about) {
@@ -56,5 +56,6 @@ module.exports = function readMessage(screen, ssb, msgKey) {
 
   screen.append(readMessageBox)
   screen.readingMessage = readMessageBox
+  readMessageBox.focus()
   screen.render()
 }
