@@ -19,30 +19,30 @@ const feedBox = blessed.list({
   scrollbar: {
     ch: ' ',
     track: {
-      bg: 'black'
+      bg: 'black',
     },
     style: {
-      inverse: true
-    }
+      inverse: true,
+    },
   },
   style: {
     item: {
       hover: {
-        bold: true
-      }
+        bold: true,
+      },
     },
     selected: {
       bg: '#004411',
       fg: '#00ff88',
-      bold: true
-    }
+      bold: true,
+    },
   },
   search: function(callback) {
     // prompt.input('Search:', '', function(err, value) {
     //   if (err) return
     //   return callback(null, value)
     // })
-  }
+  },
 })
 
 function renderPost(msg, box) {
@@ -71,6 +71,7 @@ const addNameToMsg = ssb => (msg, cb) => {
   ssb.about.get(msg.author, (err, about) => {
     if (err) return cb(err)
     const authorKey = msg.value.author
+    if (!about) return cb(null, msg)
     if (!about[authorKey]) return cb(null, msg)
     const nameDefs = about[authorKey].name
     if (!nameDefs) return cb(null, msg)
@@ -108,7 +109,7 @@ feedBox.showExistingFeed = function() {
     this.ssb.createFeedStream({
       reverse: true,
       live: false,
-      limit: this.height + 20
+      limit: this.height + 20,
     }),
     pull.filter(msg => msg && msg.value && msg.value.content),
     pull.asyncMap(addNameToMsg(this.ssb)),
@@ -128,7 +129,7 @@ feedBox.pullOlder = function() {
       reverse: true,
       live: false,
       lt: this.ssbLowest,
-      limit: 20
+      limit: 20,
     }),
     pull.filter(msg => msg && msg.value && msg.value.content),
     pull.asyncMap(addNameToMsg(this.ssb)),
@@ -149,7 +150,7 @@ feedBox.alwaysUpdateLabelWithRecents = function() {
     this.ssb.createFeedStream({
       reverse: false,
       gt: Date.now(),
-      live: true
+      live: true,
     }),
     pull.filter(msg => msg && msg.value && msg.value.content),
     pull.drain(() => {
