@@ -1,6 +1,6 @@
 {
   "name": "@staltz/feedpunk",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A scuttlebutt client in the terminal",
   "main": "index.js",
   "bin": {
