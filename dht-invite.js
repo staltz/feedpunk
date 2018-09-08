@@ -1,10 +1,9 @@
 var crypto = require('crypto')
 var Pushable = require('pull-pushable')
 var explain = require('explain-error')
-// var ssbClient = require('ssb-client')
 var MultiServer = require('multiserver')
-var makeSHSTransform = require('multiserver/plugins/shs')
 var makeDHTTransport = require('multiserver-dht')
+var makeNoauthTransform = require('multiserver/plugins/noauth')
 var muxrpc = require('muxrpc')
 var pull = require('pull-stream')
 
@@ -18,16 +17,12 @@ function toSodiumKeys(keys) {
 
 function dhtClient(opts, cb) {
   var dht = makeDHTTransport({})
-  var shs = makeSHSTransform({
-    keys: toSodiumKeys(opts.keys),
-    appKey: opts.caps,
-    //no client auth. we can't receive connections anyway.
-    auth: function(cb) {
-      cb(null, false)
+  var noauth = makeNoauthTransform({
+    keys: {
+      publicKey: Buffer.from(opts.keys.public, 'base64'),
     },
-    timeout: 6000,
   })
-  var ms = MultiServer([[dht, shs]])
+  var ms = MultiServer([[dht, noauth]])
 
   ms.client(opts.addr, function(err, stream) {
     if (err) return cb(explain(err, 'could not connect to sbot over DHT'))
@@ -163,8 +158,8 @@ module.exports = {
           )
         }
         //#endregion
-        var shsTransform = 'shs:' + remoteId.replace(/^@/, '')
-        var addr = invite + '~' + shsTransform
+        var transform = 'noauth'
+        var addr = invite + '~' + transform
         dhtClient(
           {
             keys: sbot.keys,
