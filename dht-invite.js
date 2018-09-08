@@ -29,7 +29,7 @@ function dhtClient(opts, cb) {
   })
   var ms = MultiServer([[dht, shs]])
 
-  ms.client(opts.remote, function(err, stream) {
+  ms.client(opts.addr, function(err, stream) {
     if (err) return cb(explain(err, 'could not connect to sbot over DHT'))
     var sbot = muxrpc(opts.manifest, false)()
     sbot.id = '@' + stream.remote.toString('base64') + '.ed25519'
@@ -163,11 +163,13 @@ module.exports = {
           )
         }
         //#endregion
+        var shsTransform = 'shs:' + remoteId.replace(/^@/, '')
+        var addr = invite + '~' + shsTransform
         dhtClient(
           {
             keys: sbot.keys,
             caps: config.caps,
-            remote: invite,
+            addr: addr,
             manifest: { dhtInvite: { use: 'async' }, getAddress: 'async' },
           },
           function(err, rpc) {
@@ -188,8 +190,7 @@ module.exports = {
                 contact: remoteId,
                 following: true,
               })
-              var shsTransform = 'shs:' + remoteId.replace(/^@/, '')
-              sbot.gossip.add(invite + '~' + shsTransform, 'manual')
+              sbot.gossip.add(addr, 'manual')
               rpc.close()
               cb(null, true)
             })
