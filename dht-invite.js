@@ -90,6 +90,9 @@ module.exports = {
       accept: function(invite, cb) {
         var seed, remoteId
         //#region parse the invite
+        if (typeof invite !== 'string' || invite.length === 0) {
+          return cb(new Error('Cannot `accept` the DHT invite, it is missing'))
+        }
         var parts = invite.split(':')
         if (parts.length !== 3) {
           return cb(
@@ -123,7 +126,7 @@ module.exports = {
         }
         //#endregion
         ssbClient(
-          null,
+          sbot.keys,
           {
             caps: config.caps,
             remote: invite,
@@ -150,6 +153,7 @@ module.exports = {
               var shsTransform = 'shs:' + remoteId.replace(/^@/, '')
               sbot.gossip.add(invite + '~' + shsTransform, 'manual')
               rpc.close()
+              cb(null, true)
             })
           }
         )
