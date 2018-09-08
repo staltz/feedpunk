@@ -190,7 +190,7 @@ module.exports = {
                 contact: remoteId,
                 following: true,
               })
-              sbot.gossip.add(addr, 'manual')
+              sbot.gossip.add(addr, 'dht')
               rpc.close()
               cb(null, true)
             })
