@@ -1,7 +1,45 @@
 var crypto = require('crypto')
 var Pushable = require('pull-pushable')
 var explain = require('explain-error')
-var ssbClient = require('ssb-client')
+// var ssbClient = require('ssb-client')
+var MultiServer = require('multiserver')
+var makeSHSTransform = require('multiserver/plugins/shs')
+var makeDHTTransport = require('multiserver-dht')
+var muxrpc = require('muxrpc')
+var pull = require('pull-stream')
+
+function toSodiumKeys(keys) {
+  if (!keys || !keys.public) return null
+  return {
+    publicKey: new Buffer(keys.public.replace('.ed25519', ''), 'base64'),
+    secretKey: new Buffer(keys.private.replace('.ed25519', ''), 'base64'),
+  }
+}
+
+function dhtClient(opts, cb) {
+  var dht = makeDHTTransport({})
+  var shs = makeSHSTransform({
+    keys: toSodiumKeys(opts.keys),
+    appKey: opts.caps,
+    //no client auth. we can't receive connections anyway.
+    auth: function(cb) {
+      cb(null, false)
+    },
+    timeout: 6000,
+  })
+  var ms = MultiServer([[dht, shs]])
+
+  ms.client(opts.remote, function(err, stream) {
+    if (err) return cb(explain(err, 'could not connect to sbot over DHT'))
+    var sbot = muxrpc(opts.manifest, false)()
+    sbot.id = '@' + stream.remote.toString('base64') + '.ed25519'
+    // // fix blobs.add. (see ./blobs.js)
+    // if (sbot.blobs && sbot.blobs.add)
+    //   sbot.blobs.add = fixBlobsAdd(sbot.blobs.add)
+    pull(stream, sbot.createStream(), stream)
+    cb(null, sbot)
+  })
+}
 
 module.exports = {
   name: 'dhtInvite',
@@ -125,9 +163,9 @@ module.exports = {
           )
         }
         //#endregion
-        ssbClient(
-          sbot.keys,
+        dhtClient(
           {
+            keys: sbot.keys,
             caps: config.caps,
             remote: invite,
             manifest: { dhtInvite: { use: 'async' }, getAddress: 'async' },
