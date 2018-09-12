@@ -15,7 +15,7 @@
     "blessed": "0.1.81",
     "human-time": "0.0.1",
     "pull-stream": "^3.6.9",
-    "scuttlebot": "11.4.4",
+    "scuttlebot": "12.0.0",
     "ssb-about": "0.1.2",
     "ssb-backlinks": "0.7.3",
     "ssb-blobs": "1.1.5",
