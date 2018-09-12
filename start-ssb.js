@@ -2,26 +2,12 @@ var ssbKeys = require('ssb-keys')
 var ssbConfigInject = require('ssb-config/inject')
 var path = require('path')
 var makeDHTPlugin = require('multiserver-dht')
-var makeNoauthPlugin = require('multiserver/plugins/noauth')
 
 function dhtTransport(sbot) {
   sbot.multiserver.transport({
     name: 'dht',
     create: () => {
       return makeDHTPlugin({ keys: sbot.dhtInvite.channels() })
-    },
-  })
-}
-
-function noauthTransform(sbot, cfg) {
-  sbot.multiserver.transform({
-    name: 'noauth',
-    create: () => {
-      return makeNoauthPlugin({
-        keys: {
-          publicKey: Buffer.from(cfg.keys.public, 'base64'),
-        },
-      })
     },
   })
 }
@@ -40,12 +26,11 @@ module.exports = function startSSB() {
   config.logging.level = ''
   return (
     require('scuttlebot/index')
-      .use(require('./dht-invite'))
+      .use(require('ssb-dht-invite'))
       .use(dhtTransport)
-      .use(noauthTransform)
       .use(require('scuttlebot/plugins/plugins'))
       .use(require('scuttlebot/plugins/master'))
-      .use(require('scuttlebot/plugins/gossip'))
+      .use(require('@staltz/sbot-gossip'))
       .use(require('scuttlebot/plugins/replicate'))
       .use(require('ssb-friends'))
       .use(require('ssb-blobs'))
