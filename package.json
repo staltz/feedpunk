@@ -12,7 +12,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@staltz/sbot-gossip": "1.1.0",
+    "@staltz/sbot-gossip": "1.1.1",
     "blessed": "0.1.81",
     "human-time": "0.0.1",
     "multiserver-dht": "3.0.0",
