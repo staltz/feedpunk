@@ -12,10 +12,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@staltz/sbot-gossip": "1.0.0",
+    "@staltz/sbot-gossip": "1.1.0",
     "blessed": "0.1.81",
     "human-time": "0.0.1",
-    "multiserver-dht": "2.3.1",
+    "multiserver-dht": "3.0.0",
     "pull-stream": "^3.6.9",
     "scuttlebot": "12.0.1",
     "pull-pushable": "^2.2.0",
