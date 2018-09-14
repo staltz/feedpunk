@@ -17,10 +17,10 @@ module.exports = function startSSB() {
   config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
   config.connections = {
     incoming: {
-      dht: [{ scope: 'public', transform: 'noauth' }],
+      dht: [{ scope: 'public', transform: 'shs' }],
     },
     outgoing: {
-      dht: [{ transform: 'noauth' }],
+      dht: [{ transform: 'shs' }],
     },
   }
   config.logging.level = ''
