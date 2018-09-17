@@ -1,13 +1,16 @@
 var ssbKeys = require('ssb-keys')
 var ssbConfigInject = require('ssb-config/inject')
 var path = require('path')
-var makeDHTPlugin = require('multiserver-dht')
+var DHT = require('multiserver-dht')
 
 function dhtTransport(sbot) {
   sbot.multiserver.transport({
     name: 'dht',
-    create: () => {
-      return makeDHTPlugin({ keys: sbot.dhtInvite.channels() })
+    create: dhtConfig => {
+      return DHT({
+        keys: sbot.dhtInvite.channels(),
+        port: dhtConfig.port,
+      })
     },
   })
 }
@@ -17,7 +20,7 @@ module.exports = function startSSB() {
   config.keys = ssbKeys.loadOrCreateSync(path.join(config.path, 'secret'))
   config.connections = {
     incoming: {
-      dht: [{ scope: 'public', transform: 'shs' }],
+      dht: [{ scope: 'public', transform: 'shs', port: 8423 }],
     },
     outgoing: {
       dht: [{ transform: 'shs' }],
