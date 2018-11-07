@@ -26,7 +26,7 @@ module.exports = function startSSB() {
       dht: [{ transform: 'shs' }],
     },
   }
-  config.logging.level = ''
+  config.logging.level = 'info'
   return (
     require('scuttlebot/index')
       .use(require('ssb-dht-invite'))
@@ -44,7 +44,8 @@ module.exports = function startSSB() {
       .use(require('ssb-contacts'))
       .use(require('ssb-query'))
       .use(require('scuttlebot/plugins/invite'))
-      // .use(require('scuttlebot/plugins/local'))
+      .use(require('scuttlebot/plugins/logging'))
+      //.use(require('scuttlebot/plugins/local'))
       .call(null, config)
   )
 }
